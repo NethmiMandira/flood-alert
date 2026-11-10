@@ -2,7 +2,7 @@
 
 A community-driven flood and landslide alert app for Sri Lanka, built with **Flutter** and **Firebase**. Residents can report incidents on a live map, and nearby users get notified so they can stay safe.
 
-> 🚧 **Status:** Under development. Step 1 (project setup) is complete.
+> 🚧 **Status:** Under development. Steps 1 and 2 are complete.
 
 ## ✨ Planned Features
 
@@ -21,12 +21,34 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 ## ✅ Progress
 
 - [x] **Step 1:** Project setup, Firebase connection, Sinhala/English localization, dark mode
-- [ ] Step 2: Authentication
+- [x] **Step 2:** Authentication (email login, register with district, auto-login, profile with emergency contacts)
 - [ ] Step 3: Incident reporting
 - [ ] Step 4: Map view
 - [ ] Step 5: Push notifications
 - [ ] Step 6: SOS and emergency contacts
 - [ ] Step 7+: Verification, admin tools, safe places, community help
+
+## 🔐 Authentication (Step 2)
+
+- Email and password login and registration with Firebase Auth
+- Users pick their Sri Lankan district (25 districts, shown in Sinhala or English)
+- `AuthGate` listens to the auth state, so login, register and logout switch screens automatically and the session is restored on app restart
+- Profile screen: edit name and district, manage up to 5 emergency contacts (used later by the SOS feature)
+- Friendly, localized error messages (Sinhala / English)
+
+## 🗄️ Data Model
+
+**`users/{uid}`**
+
+| Field | Type | Notes |
+|---|---|---|
+| `uid` | string | Firebase Auth user id |
+| `name` | string | Full name |
+| `email` | string | Read-only in the profile screen |
+| `district` | string | English district name, used later for notification targeting |
+| `role` | string | `"user"` or `"admin"` |
+| `emergencyContacts` | array | List of `{ name, phone }` (max 5) |
+| `createdAt` | timestamp | Server timestamp |
 
 ## 🛠️ Tech Stack
 
@@ -36,26 +58,33 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 | Backend | Firebase (Auth, Cloud Firestore, Cloud Messaging) |
 | State management | Provider |
 | Localization | `flutter_localizations`, ARB files (`si`, `en`) |
+| Local storage | `shared_preferences` (language and theme) |
 | Maps and location | `google_maps_flutter`, `geolocator` |
 
 ## 📁 Project Structure
 
 ```
 lib/
-├── core/          # theme, constants, utils
-├── l10n/          # app_en.arb, app_si.arb
-├── models/
-├── services/      # Firebase services
-├── providers/     # state management
-├── features/      # auth, home, map, report, emergency, settings
-└── widgets/       # shared widgets
+├── core/
+│   ├── constants/   # districts list
+│   ├── theme/       # light and dark themes
+│   └── utils/       # auth error messages
+├── l10n/            # app_en.arb, app_si.arb
+├── models/          # user_model.dart
+├── services/        # auth_service.dart, user_service.dart
+├── providers/       # settings_provider.dart (language, theme)
+├── features/
+│   ├── auth/        # login, register, auth gate
+│   ├── home/        # home screen
+│   └── profile/     # profile and emergency contacts
+└── widgets/         # shared widgets
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - Flutter SDK
-- A Firebase project
+- A Firebase project (Authentication with Email/Password and Cloud Firestore enabled)
 - Firebase CLI and FlutterFire CLI
 
 ### Setup

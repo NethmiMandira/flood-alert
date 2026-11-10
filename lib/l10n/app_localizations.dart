@@ -151,6 +151,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark Mode'**
   String get darkMode;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @noAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get noAccount;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeBack;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login to stay informed and stay safe'**
+  String get loginSubtitle;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldRequired;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email'**
+  String get invalidEmail;
+
+  /// No description provided for @passwordMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMin;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccount;
+
+  /// No description provided for @registerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join your community and help others stay safe'**
+  String get registerSubtitle;
+
+  /// No description provided for @fullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get fullName;
+
+  /// No description provided for @district.
+  ///
+  /// In en, this message translates to:
+  /// **'District'**
+  String get district;
+
+  /// No description provided for @selectDistrict.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your district'**
+  String get selectDistrict;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPassword;
+
+  /// No description provided for @passwordsNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsNotMatch;
+
+  /// No description provided for @haveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get haveAccount;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcome;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile saved'**
+  String get profileSaved;
+
+  /// No description provided for @addContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contact'**
+  String get addContact;
+
+  /// No description provided for @contactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get contactName;
+
+  /// No description provided for @contactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get contactPhone;
+
+  /// No description provided for @invalidPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number'**
+  String get invalidPhone;
+
+  /// No description provided for @noContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'No emergency contacts yet'**
+  String get noContacts;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @maxContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add up to 5 contacts'**
+  String get maxContacts;
+
+  /// No description provided for @emergencyContactsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'These people will receive your SOS message in an emergency'**
+  String get emergencyContactsHint;
 }
 
 class _AppLocalizationsDelegate

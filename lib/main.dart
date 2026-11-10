@@ -6,7 +6,7 @@ import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
 import 'providers/settings_provider.dart';
-
+import 'features/auth/auth_gate.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const SetupTestScreen(),
+                  home: AuthGate(),
     );
   }
 }
