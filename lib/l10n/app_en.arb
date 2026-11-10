@@ -1,0 +1,11 @@
+{
+  "appTitle": "Flood Alert",
+  "login": "Login",
+  "register": "Register",
+  "reportIncident": "Report Incident",
+  "flood": "Flood",
+  "landslide": "Landslide",
+  "emergencyContacts": "Emergency Contacts",
+  "language": "Language",
+  "darkMode": "Dark Mode"
+}

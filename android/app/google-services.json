@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "449567700176",
+    "project_id": "floodalert-ff51f",
+    "storage_bucket": "floodalert-ff51f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449567700176:android:216ed6ed627cd658101ad5",
+        "android_client_info": {
+          "package_name": "com.example.flood_alert"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSuiruz9HySsTm73DkuVh6H0gnRYYpZ-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
