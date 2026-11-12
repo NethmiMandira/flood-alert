@@ -130,4 +130,76 @@ class AppLocalizationsSi extends AppLocalizations {
   @override
   String get emergencyContactsHint =>
       'හදිසි අවස්ථාවක ඔබේ SOS පණිවිඩය මොවුන්ට යැවේ';
+
+  @override
+  String get roadBlocked => 'මාර්ගය අවහිරයි';
+
+  @override
+  String get reportType => 'සිදුවීමේ වර්ගය';
+
+  @override
+  String get severity => 'බරපතලකම';
+
+  @override
+  String get severityYellow => 'අඩු (කහ)';
+
+  @override
+  String get severityOrange => 'මධ්‍යම (තැඹිලි)';
+
+  @override
+  String get severityRed => 'ඉහළ (රතු)';
+
+  @override
+  String get description => 'විස්තරය';
+
+  @override
+  String get descriptionHint =>
+      'සිදුවන්නේ කුමක්ද? ජල මට්ටම, බලපෑමට ලක්වූ ප්‍රදේශය ආදිය';
+
+  @override
+  String get descriptionShort => 'අවම අකුරු 10ක් ලියන්න';
+
+  @override
+  String get location => 'ස්ථානය';
+
+  @override
+  String get getLocation => 'මගේ ස්ථානය ලබාගන්න';
+
+  @override
+  String get locationNeeded => 'ස්ථානය තවම ලබාගෙන නැත';
+
+  @override
+  String get submitReport => 'වාර්තාව යවන්න';
+
+  @override
+  String get reportSubmitted => 'වාර්තාව යවන ලදී';
+
+  @override
+  String get locationServiceDisabled =>
+      'කරුණාකර location (GPS) ක්‍රියාත්මක කරන්න';
+
+  @override
+  String get locationDenied => 'වාර්තා කිරීමට location අවසරය අවශ්‍යයි';
+
+  @override
+  String get locationDeniedForever =>
+      'Location අවසරය අවහිරයි. app settings වලින් සක්‍රිය කරන්න';
+
+  @override
+  String get locationFailed => 'ඔබේ ස්ථානය ලබාගත නොහැකි විය. නැවත උත්සාහ කරන්න';
+
+  @override
+  String get openSettings => 'සැකසුම්';
+
+  @override
+  String get recentReports => 'මෑත වාර්තා';
+
+  @override
+  String get noReports => 'වාර්තා තවම නැත';
+
+  @override
+  String get confirmations => 'තහවුරු කිරීම්';
+
+  @override
+  String get reportedBy => 'වාර්තා කළේ';
 }

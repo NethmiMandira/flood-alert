@@ -337,6 +337,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These people will receive your SOS message in an emergency'**
   String get emergencyContactsHint;
+
+  /// No description provided for @roadBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Road blocked'**
+  String get roadBlocked;
+
+  /// No description provided for @reportType.
+  ///
+  /// In en, this message translates to:
+  /// **'Incident type'**
+  String get reportType;
+
+  /// No description provided for @severity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get severity;
+
+  /// No description provided for @severityYellow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low (Yellow)'**
+  String get severityYellow;
+
+  /// No description provided for @severityOrange.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium (Orange)'**
+  String get severityOrange;
+
+  /// No description provided for @severityRed.
+  ///
+  /// In en, this message translates to:
+  /// **'High (Red)'**
+  String get severityRed;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @descriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What is happening? Water level, affected area, etc.'**
+  String get descriptionHint;
+
+  /// No description provided for @descriptionShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write at least 10 characters'**
+  String get descriptionShort;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @getLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Get my location'**
+  String get getLocation;
+
+  /// No description provided for @locationNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Location not captured yet'**
+  String get locationNeeded;
+
+  /// No description provided for @submitReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit report'**
+  String get submitReport;
+
+  /// No description provided for @reportSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Report submitted'**
+  String get reportSubmitted;
+
+  /// No description provided for @locationServiceDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Please turn on location (GPS)'**
+  String get locationServiceDisabled;
+
+  /// No description provided for @locationDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is needed to report an incident'**
+  String get locationDenied;
+
+  /// No description provided for @locationDeniedForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is blocked. Enable it in app settings'**
+  String get locationDeniedForever;
+
+  /// No description provided for @locationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get your location. Try again'**
+  String get locationFailed;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get openSettings;
+
+  /// No description provided for @recentReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent reports'**
+  String get recentReports;
+
+  /// No description provided for @noReports.
+  ///
+  /// In en, this message translates to:
+  /// **'No reports yet'**
+  String get noReports;
+
+  /// No description provided for @confirmations.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmations'**
+  String get confirmations;
+
+  /// No description provided for @reportedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'By'**
+  String get reportedBy;
 }
 
 class _AppLocalizationsDelegate

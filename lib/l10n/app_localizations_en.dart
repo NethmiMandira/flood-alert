@@ -130,4 +130,76 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get emergencyContactsHint =>
       'These people will receive your SOS message in an emergency';
+
+  @override
+  String get roadBlocked => 'Road blocked';
+
+  @override
+  String get reportType => 'Incident type';
+
+  @override
+  String get severity => 'Severity';
+
+  @override
+  String get severityYellow => 'Low (Yellow)';
+
+  @override
+  String get severityOrange => 'Medium (Orange)';
+
+  @override
+  String get severityRed => 'High (Red)';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get descriptionHint =>
+      'What is happening? Water level, affected area, etc.';
+
+  @override
+  String get descriptionShort => 'Please write at least 10 characters';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get getLocation => 'Get my location';
+
+  @override
+  String get locationNeeded => 'Location not captured yet';
+
+  @override
+  String get submitReport => 'Submit report';
+
+  @override
+  String get reportSubmitted => 'Report submitted';
+
+  @override
+  String get locationServiceDisabled => 'Please turn on location (GPS)';
+
+  @override
+  String get locationDenied =>
+      'Location permission is needed to report an incident';
+
+  @override
+  String get locationDeniedForever =>
+      'Location permission is blocked. Enable it in app settings';
+
+  @override
+  String get locationFailed => 'Could not get your location. Try again';
+
+  @override
+  String get openSettings => 'Settings';
+
+  @override
+  String get recentReports => 'Recent reports';
+
+  @override
+  String get noReports => 'No reports yet';
+
+  @override
+  String get confirmations => 'Confirmations';
+
+  @override
+  String get reportedBy => 'By';
 }
