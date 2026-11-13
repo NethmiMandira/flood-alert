@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../l10n/app_localizations.dart';
 import '../../services/auth_service.dart';
 import '../../services/report_service.dart';
+import '../../services/notification_service.dart';
 import '../../models/user_model.dart';
 import '../../models/report_model.dart';
 import '../profile/profile_screen.dart';
@@ -19,12 +21,53 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _auth = AuthService();
   final _reportService = ReportService();
+  final _notifications = NotificationService();
 
   // Created once, so rebuilding the screen does not restart the Firestore stream
   late final Stream<List<ReportModel>> _reportsStream =
       _reportService.activeReportsStream();
 
   int _tab = 0; // 0 = list, 1 = map
+
+  StreamSubscription<UserModel?>? _userSub;
+  StreamSubscription? _messageSub;
+
+  // Remembers the last district we subscribed to, so the profile stream
+  // emitting twice (cache, then server) does not trigger two syncs
+  String? _lastSyncedDistrict;
+
+  @override
+  void initState() {
+    super.initState();
+    final uid = _auth.currentUser!.uid;
+
+    // Keep the topic subscription in sync with the user's district
+    _userSub = _auth.userStream(uid).listen((user) {
+      if (user != null && user.district != _lastSyncedDistrict) {
+        _lastSyncedDistrict = user.district;
+        _notifications.syncDistrict(uid: uid, district: user.district);
+      }
+    });
+
+    // Show messages that arrive while the app is open
+    _messageSub = _notifications.foregroundMessages.listen((message) {
+      final n = message.notification;
+      if (n == null || !mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${n.title ?? ''}\n${n.body ?? ''}'.trim()),
+          duration: const Duration(seconds: 6),
+        ),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _userSub?.cancel();
+    _messageSub?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(
                 tooltip: t.logout,
                 icon: const Icon(Icons.logout),
-                onPressed: () => _auth.logout(),
+                onPressed: () async {
+                  // Stop alerts for this account before signing out
+                  await _notifications.unsubscribe();
+                  await _auth.logout();
+                },
               ),
             ],
           ),

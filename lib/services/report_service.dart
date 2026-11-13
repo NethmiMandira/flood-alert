@@ -6,8 +6,10 @@ class ReportService {
       FirebaseFirestore.instance.collection('reports');
 
   // Save a new report
-  Future<void> addReport(ReportModel report) async {
-    await _reports.add(report.toMap());
+   // Save a new report and return its document id
+  Future<String> addReport(ReportModel report) async {
+    final ref = await _reports.add(report.toMap());
+    return ref.id;
   }
 
   // Live stream of the latest reports, newest first.

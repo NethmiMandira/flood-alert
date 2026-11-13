@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/report_model.dart';
 import '../../models/user_model.dart';
 import '../../services/location_service.dart';
+import '../../services/notify_service.dart';
 import '../../services/report_service.dart';
 import '../../core/utils/report_labels.dart';
 
@@ -21,6 +23,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
   final _descCtrl = TextEditingController();
   final _locationService = LocationService();
   final _reportService = ReportService();
+  final _notifyService = NotifyService();
 
   ReportType _type = ReportType.flood;
   Severity _severity = Severity.yellow;
@@ -101,7 +104,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
 
     setState(() => _saving = true);
     try {
-      await _reportService.addReport(
+      final reportId = await _reportService.addReport(
         ReportModel(
           userId: widget.user.uid,
           userName: widget.user.name,
@@ -113,6 +116,10 @@ class _AddReportScreenState extends State<AddReportScreen> {
           district: widget.user.district,
         ),
       );
+
+      // Fire and forget: the user should not wait for the notification
+      unawaited(_notifyService.notifyReport(reportId));
+
       if (!mounted) return;
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(t.reportSubmitted)));
