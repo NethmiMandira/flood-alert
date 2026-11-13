@@ -202,4 +202,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportedBy => 'By';
+
+  @override
+  String get list => 'List';
+
+  @override
+  String get map => 'Map';
+
+  @override
+  String get reportDetails => 'Report details';
+
+  @override
+  String get myLocation => 'My location';
+
+  @override
+  String get coordinates => 'Coordinates';
+
+  @override
+  String get reportedOn => 'Reported on';
+
+  @override
+  String get mapCredit => '© OpenStreetMap contributors';
 }

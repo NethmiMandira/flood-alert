@@ -202,4 +202,25 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get reportedBy => 'වාර්තා කළේ';
+
+  @override
+  String get list => 'ලැයිස්තුව';
+
+  @override
+  String get map => 'සිතියම';
+
+  @override
+  String get reportDetails => 'වාර්තාවේ විස්තර';
+
+  @override
+  String get myLocation => 'මගේ ස්ථානය';
+
+  @override
+  String get coordinates => 'ඛණ්ඩාංක';
+
+  @override
+  String get reportedOn => 'වාර්තා කළ වේලාව';
+
+  @override
+  String get mapCredit => '© OpenStreetMap contributors';
 }

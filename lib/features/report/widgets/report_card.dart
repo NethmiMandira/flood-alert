@@ -3,8 +3,10 @@ import 'package:intl/intl.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../models/report_model.dart';
 import '../../../core/utils/report_labels.dart';
+import '../report_detail_screen.dart';
 
-// One report in the list: severity-colored icon, type, description, meta line
+// One report in the list: severity-colored icon, type, description, meta line.
+// Tapping it opens the report detail screen.
 class ReportCard extends StatelessWidget {
   final ReportModel report;
 
@@ -23,6 +25,13 @@ class ReportCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: ListTile(
         isThreeLine: true,
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ReportDetailScreen(report: report),
+            ),
+          );
+        },
         leading: CircleAvatar(
           backgroundColor: severityColor(report.severity),
           child: Icon(typeIcon(report.type), color: Colors.white),
@@ -44,6 +53,7 @@ class ReportCard extends StatelessWidget {
             ),
           ],
         ),
+        trailing: const Icon(Icons.chevron_right),
       ),
     );
   }

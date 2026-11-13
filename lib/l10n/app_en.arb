@@ -61,5 +61,12 @@
   "recentReports": "Recent reports",
   "noReports": "No reports yet",
   "confirmations": "Confirmations",
-  "reportedBy": "By"
+  "reportedBy": "By",  "reportedBy": "By",
+  "list": "List",
+  "map": "Map",
+  "reportDetails": "Report details",
+  "myLocation": "My location",
+  "coordinates": "Coordinates",
+  "reportedOn": "Reported on",
+  "mapCredit": "© OpenStreetMap contributors"
 }

@@ -2,49 +2,36 @@
 
 A community-driven flood and landslide alert app for Sri Lanka, built with **Flutter** and **Firebase**. Residents can report incidents on a live map, and nearby users get notified so they can stay safe.
 
-> 🚧 **Status:** Under development. Steps 1 to 3 are complete.
+> 🚧 **Status:** Under development.
 
-## ✨ Planned Features
+## ✨ Features
 
-- 📍 Report floods, landslides and blocked roads with photo + GPS location
-- 🗺️ Live map with color-coded severity (🟡 yellow, 🟠 orange, 🔴 red)
+### Available now
+- 🔐 Email login and registration, with automatic sign-in on app restart
+- 👤 Profile with district and up to 5 emergency contacts
+- 📍 Report floods, landslides and blocked roads with severity and GPS location
+- 📋 Live, real-time list of recent reports
+- 🗺️ Live map with color-coded pins (🟡 low, 🟠 medium, 🔴 high) and a report detail screen
+- 🌐 Sinhala / English language support
+- 🌙 Dark mode
+
+### Planned
+- 📸 Photo upload for reports
 - 🔔 Push notifications for nearby incidents
-- 🆘 SOS button, "I'm safe" button and emergency contacts
+- 🆘 SOS button, "I'm safe" button and emergency numbers
 - ✅ Community verification of reports
 - 🛠️ Admin controls (remove fake reports, send official alerts)
 - 🏠 Safe places map (shelters, hospitals, schools)
 - 🤝 Community help (requests and offers)
-- 🌐 Sinhala / English language support
-- 🌙 Dark mode
+- 🔥 Heatmap of high-risk areas
 - 📴 Offline support
 
-## ✅ Progress
+## 📱 How It Works
 
-- [x] **Step 1:** Project setup, Firebase connection, Sinhala/English localization, dark mode
-- [x] **Step 2:** Authentication (email login, register with district, auto-login, profile with emergency contacts)
-- [x] **Step 3:** Incident reporting (type, severity, description, GPS location, live reports list)
-- [ ] Step 4: Map view
-- [ ] Step 5: Push notifications
-- [ ] Step 6: SOS and emergency contacts
-- [ ] Step 7+: Verification, admin tools, safe places, community help, photo upload
-
-## 🔐 Authentication (Step 2)
-
-- Email and password login and registration with Firebase Auth
-- Users pick their Sri Lankan district (25 districts, shown in Sinhala or English)
-- `AuthGate` listens to the auth state, so login, register and logout switch screens automatically and the session is restored on app restart
-- Profile screen: edit name and district, manage up to 5 emergency contacts (used later by the SOS feature)
-- Friendly, localized error messages (Sinhala / English)
-
-## 📍 Incident Reporting (Step 3)
-
-- Report a **flood**, **landslide** or **blocked road**
-- Choose a severity level: 🟡 low, 🟠 medium, 🔴 high
-- Add a description (10 to 300 characters)
-- GPS location is captured automatically, with clear messages when GPS is off or permission is denied (and a shortcut to the settings)
-- Home screen shows a live, real-time list of recent active reports (Firestore streams), color-coded by severity
-
-> Photo upload is planned for a later step.
+- **Authentication:** Firebase Auth with email and password. An `AuthGate` listens to the auth state, so login, register and logout switch screens automatically. Users pick one of Sri Lanka's 25 districts (shown in Sinhala or English).
+- **Reporting:** A user chooses the incident type and severity, writes a description (10 to 300 characters) and the GPS location is captured automatically. Clear messages are shown when GPS is off or permission is denied, with a shortcut to the settings.
+- **Live updates:** Reports are streamed from Cloud Firestore, so new reports appear instantly on both the list and the map.
+- **Map:** Built with OpenStreetMap and `flutter_map`, so no API key or billing account is needed. Tapping a pin opens the report details.
 
 ## 🗄️ Data Model
 
@@ -71,7 +58,7 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 | `location` | geopoint | GPS position of the incident |
 | `district` | string | Reporter's district |
 | `status` | string | `active` or `resolved` |
-| `confirmedBy` | array | User ids who confirmed the report (used in a later step) |
+| `confirmedBy` | array | User ids who confirmed the report (used in a later release) |
 | `createdAt` | timestamp | Server timestamp |
 
 ## 🛠️ Tech Stack
@@ -83,7 +70,7 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 | State management | Provider |
 | Localization | `flutter_localizations`, ARB files (`si`, `en`) |
 | Local storage | `shared_preferences` (language and theme) |
-| Maps and location | `google_maps_flutter`, `geolocator` |
+| Map and location | `flutter_map` (OpenStreetMap), `latlong2`, `geolocator` |
 
 ## 📁 Project Structure
 
@@ -99,9 +86,10 @@ lib/
 ├── providers/       # settings_provider.dart (language, theme)
 ├── features/
 │   ├── auth/        # login, register, auth gate
-│   ├── home/        # home screen with live reports list
+│   ├── home/        # home screen with list and map tabs
+│   ├── map/         # map screen with severity pins
 │   ├── profile/     # profile and emergency contacts
-│   └── report/      # add report screen, report card widget
+│   └── report/      # add report, report details, report card
 └── widgets/         # shared widgets
 ```
 
@@ -131,6 +119,10 @@ flutter run
 ```
 
 > `lib/firebase_options.dart` and `google-services.json` are generated by `flutterfire configure` and are not committed to the repository.
+
+## 🙏 Credits
+
+Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
 
 ## 👩‍💻 Author
 

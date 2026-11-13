@@ -61,5 +61,12 @@
   "recentReports": "මෑත වාර්තා",
   "noReports": "වාර්තා තවම නැත",
   "confirmations": "තහවුරු කිරීම්",
-  "reportedBy": "වාර්තා කළේ"
+  "reportedBy": "වාර්තා කළේ",  "reportedBy": "වාර්තා කළේ",
+  "list": "ලැයිස්තුව",
+  "map": "සිතියම",
+  "reportDetails": "වාර්තාවේ විස්තර",
+  "myLocation": "මගේ ස්ථානය",
+  "coordinates": "ඛණ්ඩාංක",
+  "reportedOn": "වාර්තා කළ වේලාව",
+  "mapCredit": "© OpenStreetMap contributors"
 }

@@ -475,6 +475,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By'**
   String get reportedBy;
+
+  /// No description provided for @list.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get list;
+
+  /// No description provided for @map.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get map;
+
+  /// No description provided for @reportDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Report details'**
+  String get reportDetails;
+
+  /// No description provided for @myLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'My location'**
+  String get myLocation;
+
+  /// No description provided for @coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates'**
+  String get coordinates;
+
+  /// No description provided for @reportedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported on'**
+  String get reportedOn;
+
+  /// No description provided for @mapCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'© OpenStreetMap contributors'**
+  String get mapCredit;
 }
 
 class _AppLocalizationsDelegate
