@@ -517,6 +517,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'© OpenStreetMap contributors'**
   String get mapCredit;
+
+  /// No description provided for @watchedDistricts.
+  ///
+  /// In en, this message translates to:
+  /// **'Other districts to follow'**
+  String get watchedDistricts;
+
+  /// No description provided for @watchedDistrictsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You will also get alerts about new reports in these districts'**
+  String get watchedDistrictsHint;
+
+  /// No description provided for @noWatchedDistricts.
+  ///
+  /// In en, this message translates to:
+  /// **'No extra districts selected'**
+  String get noWatchedDistricts;
+
+  /// No description provided for @selectDistricts.
+  ///
+  /// In en, this message translates to:
+  /// **'Select districts'**
+  String get selectDistricts;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
 }
 
 class _AppLocalizationsDelegate

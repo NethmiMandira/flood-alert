@@ -32,21 +32,29 @@ class _HomeScreenState extends State<HomeScreen> {
   StreamSubscription<UserModel?>? _userSub;
   StreamSubscription? _messageSub;
 
-  // Remembers the last district we subscribed to, so the profile stream
-  // emitting twice (cache, then server) does not trigger two syncs
-  String? _lastSyncedDistrict;
+  // Remembers what we last synced (home district + followed districts), so the
+  // profile stream emitting twice (cache, then server) does not sync twice
+  String? _lastSyncedKey;
 
   @override
   void initState() {
     super.initState();
     final uid = _auth.currentUser!.uid;
 
-    // Keep the topic subscription in sync with the user's district
+    // Keep the topic subscriptions in sync with the user's districts
     _userSub = _auth.userStream(uid).listen((user) {
-      if (user != null && user.district != _lastSyncedDistrict) {
-        _lastSyncedDistrict = user.district;
-        _notifications.syncDistrict(uid: uid, district: user.district);
-      }
+      if (user == null) return;
+
+      final watched = [...user.watchedDistricts]..sort();
+      final key = '${user.district}|${watched.join(',')}';
+      if (key == _lastSyncedKey) return;
+      _lastSyncedKey = key;
+
+      _notifications.syncTopics(
+        uid: uid,
+        district: user.district,
+        watchedDistricts: user.watchedDistricts,
+      );
     });
 
     // Show messages that arrive while the app is open

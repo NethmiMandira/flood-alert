@@ -223,4 +223,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapCredit => '© OpenStreetMap contributors';
+
+  @override
+  String get watchedDistricts => 'Other districts to follow';
+
+  @override
+  String get watchedDistrictsHint =>
+      'You will also get alerts about new reports in these districts';
+
+  @override
+  String get noWatchedDistricts => 'No extra districts selected';
+
+  @override
+  String get selectDistricts => 'Select districts';
+
+  @override
+  String get done => 'Done';
 }

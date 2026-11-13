@@ -22,6 +22,11 @@ class UserModel {
   final String district;
   final String role; // "user" or "admin"
   final List<EmergencyContact> emergencyContacts;
+
+  // Extra districts the user wants alerts from, besides their own.
+  // Stored as English district names.
+  final List<String> watchedDistricts;
+
   final DateTime? createdAt;
 
   UserModel({
@@ -31,6 +36,7 @@ class UserModel {
     required this.district,
     this.role = 'user',
     this.emergencyContacts = const [],
+    this.watchedDistricts = const [],
     this.createdAt,
   });
 
@@ -44,6 +50,7 @@ class UserModel {
         'role': role,
         'emergencyContacts':
             emergencyContacts.map((c) => c.toMap()).toList(),
+        'watchedDistricts': watchedDistricts,
         'createdAt': FieldValue.serverTimestamp(),
       };
 
@@ -56,6 +63,8 @@ class UserModel {
         emergencyContacts: (map['emergencyContacts'] as List<dynamic>? ?? [])
             .map((e) => EmergencyContact.fromMap(Map<String, dynamic>.from(e)))
             .toList(),
+        // Older user documents do not have this field yet
+        watchedDistricts: List<String>.from(map['watchedDistricts'] ?? []),
         createdAt: (map['createdAt'] as Timestamp?)?.toDate(),
       );
 }

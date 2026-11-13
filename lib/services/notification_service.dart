@@ -5,7 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  static const _prefKey = 'subscribed_topic';
+
+  static const _topicsKey = 'subscribed_topics';
+  // Older versions of the app stored a single topic under this key
+  static const _legacyTopicKey = 'subscribed_topic';
 
   // "Nuwara Eliya" -> "district_nuwara_eliya"
   // Topic names cannot contain spaces
@@ -24,6 +27,7 @@ class NotificationService {
 
   // Save this device's FCM token on the user's profile
   Future<void> saveToken(String uid) async {
+    // ignore: deprecated_member_use
     final token = await _fcm.getToken();
     if (token == null) return;
     await FirebaseFirestore.instance
@@ -32,11 +36,12 @@ class NotificationService {
         .update({'fcmToken': token});
   }
 
-  // Subscribe to the user's district topic.
-  // If the district changed, unsubscribe from the old topic first.
-  Future<void> syncDistrict({
+  // Make the device's topic subscriptions match the user's home district
+  // plus any extra districts they chose to follow.
+  Future<void> syncTopics({
     required String uid,
     required String district,
+    required List<String> watchedDistricts,
   }) async {
     // 1. Save the token first. It does not depend on the permission.
     try {
@@ -46,23 +51,39 @@ class NotificationService {
       debugPrint('FCM token save failed: $e');
     }
 
-    // 2. Ask for permission and subscribe to the district topic
+    // 2. Ask for permission and update the topic subscriptions
     try {
       final granted = await requestPermission();
       debugPrint('Notification permission granted: $granted');
       if (!granted) return;
 
       final prefs = await SharedPreferences.getInstance();
-      final newTopic = topicFor(district);
-      final oldTopic = prefs.getString(_prefKey);
-      if (oldTopic == newTopic) return;
 
-      if (oldTopic != null) await _fcm.unsubscribeFromTopic(oldTopic);
-      await _fcm.subscribeToTopic(newTopic);
-      await prefs.setString(_prefKey, newTopic);
-      debugPrint('Subscribed to topic: $newTopic');
+      // Topics the user should be subscribed to now
+      final wanted = <String>{
+        topicFor(district),
+        for (final d in watchedDistricts) topicFor(d),
+      };
+
+      // Topics this device is subscribed to already
+      final current = <String>{...(prefs.getStringList(_topicsKey) ?? [])};
+      final legacy = prefs.getString(_legacyTopicKey);
+      if (legacy != null) current.add(legacy);
+
+      // Unsubscribe from removed topics, subscribe to new ones
+      for (final topic in current.difference(wanted)) {
+        await _fcm.unsubscribeFromTopic(topic);
+      }
+      for (final topic in wanted.difference(current)) {
+        await _fcm.subscribeToTopic(topic);
+      }
+
+      await prefs.setStringList(_topicsKey, wanted.toList());
+      await prefs.remove(_legacyTopicKey);
+      debugPrint('Subscribed topics: $wanted');
     } catch (e) {
-      debugPrint('Topic subscribe failed: $e');
+      // Notifications are optional, so never crash the app because of them
+      debugPrint('Topic sync failed: $e');
     }
   }
 
@@ -70,11 +91,15 @@ class NotificationService {
   Future<void> unsubscribe() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final topic = prefs.getString(_prefKey);
-      if (topic != null) {
+      final topics = <String>{...(prefs.getStringList(_topicsKey) ?? [])};
+      final legacy = prefs.getString(_legacyTopicKey);
+      if (legacy != null) topics.add(legacy);
+
+      for (final topic in topics) {
         await _fcm.unsubscribeFromTopic(topic);
-        await prefs.remove(_prefKey);
       }
+      await prefs.remove(_topicsKey);
+      await prefs.remove(_legacyTopicKey);
     } catch (e) {
       debugPrint('Unsubscribe failed: $e');
     }

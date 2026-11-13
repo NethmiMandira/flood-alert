@@ -10,11 +10,13 @@ class UserService {
     required String name,
     required String district,
     required List<EmergencyContact> contacts,
+    required List<String> watchedDistricts,
   }) async {
     await _db.collection('users').doc(uid).update({
       'name': name.trim(),
       'district': district,
       'emergencyContacts': contacts.map((c) => c.toMap()).toList(),
+      'watchedDistricts': watchedDistricts,
     });
   }
 }

@@ -223,4 +223,20 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get mapCredit => '© OpenStreetMap contributors';
+
+  @override
+  String get watchedDistricts => 'අමතර දිස්ත්‍රික්ක';
+
+  @override
+  String get watchedDistrictsHint =>
+      'මෙම දිස්ත්‍රික්වල නව වාර්තා ගැනද ඔබට දැනුම් දෙනු ඇත';
+
+  @override
+  String get noWatchedDistricts => 'අමතර දිස්ත්‍රික්ක තෝරා නැත';
+
+  @override
+  String get selectDistricts => 'දිස්ත්‍රික්ක තෝරන්න';
+
+  @override
+  String get done => 'අවසන්';
 }

@@ -4,6 +4,15 @@ import '../../models/user_model.dart';
 import '../../services/user_service.dart';
 import '../../core/constants/districts.dart';
 
+// Sinhala or English name of a district, given its English name
+String _districtLabel(String en, bool isSi) {
+  if (!isSi) return en;
+  for (final d in sriLankaDistricts) {
+    if (d.en == en) return d.si;
+  }
+  return en;
+}
+
 class ProfileScreen extends StatefulWidget {
   final UserModel user;
 
@@ -21,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late final TextEditingController _nameCtrl;
   late String _district;
   late List<EmergencyContact> _contacts;
+  late Set<String> _watched;
   bool _saving = false;
 
   @override
@@ -30,6 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _nameCtrl = TextEditingController(text: widget.user.name);
     _district = widget.user.district;
     _contacts = List.of(widget.user.emergencyContacts);
+    _watched = widget.user.watchedDistricts.toSet();
   }
 
   @override
@@ -57,6 +68,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  Future<void> _pickDistricts() async {
+    final result = await showDialog<Set<String>>(
+      context: context,
+      builder: (_) => _DistrictPickerDialog(
+        selected: _watched,
+        exclude: _district, // the home district is always followed
+      ),
+    );
+
+    if (result != null) {
+      setState(() => _watched = result);
+    }
+  }
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -68,6 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         name: _nameCtrl.text,
         district: _district,
         contacts: _contacts,
+        watchedDistricts: _watched.toList(),
       );
       if (!mounted) return;
       ScaffoldMessenger.of(context)
@@ -87,6 +113,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final t = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isSi = Localizations.localeOf(context).languageCode == 'si';
+
+    final watchedSorted = _watched.toList()..sort();
 
     return Scaffold(
       appBar: AppBar(title: Text(t.profile)),
@@ -124,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // District
+                // Home district
                 DropdownButtonFormField<String>(
                   initialValue: _district,
                   isExpanded: true,
@@ -140,9 +168,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ))
                       .toList(),
                   onChanged: (v) {
-                    if (v != null) setState(() => _district = v);
+                    if (v == null) return;
+                    setState(() {
+                      _district = v;
+                      // The home district is always followed, so it does not
+                      // need to be in the extra list
+                      _watched.remove(v);
+                    });
                   },
                 ),
+                const SizedBox(height: 32),
+
+                // Extra districts to follow
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        t.watchedDistricts,
+                        style: theme.textTheme.titleMedium,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: _pickDistricts,
+                      icon: const Icon(Icons.add_location_alt_outlined),
+                      label: Text(t.add),
+                    ),
+                  ],
+                ),
+                Text(t.watchedDistrictsHint, style: theme.textTheme.bodySmall),
+                const SizedBox(height: 8),
+                if (watchedSorted.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Center(child: Text(t.noWatchedDistricts)),
+                  )
+                else
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: watchedSorted.map((d) {
+                      return InputChip(
+                        label: Text(_districtLabel(d, isSi)),
+                        onDeleted: () => setState(() => _watched.remove(d)),
+                      );
+                    }).toList(),
+                  ),
                 const SizedBox(height: 32),
 
                 // Emergency contacts header
@@ -208,6 +278,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+// Dialog for choosing extra districts to follow (multi-select).
+// It is its own widget so it keeps its own selection until "Done" is pressed.
+class _DistrictPickerDialog extends StatefulWidget {
+  final Set<String> selected;
+  final String exclude;
+
+  const _DistrictPickerDialog({
+    required this.selected,
+    required this.exclude,
+  });
+
+  @override
+  State<_DistrictPickerDialog> createState() => _DistrictPickerDialogState();
+}
+
+class _DistrictPickerDialogState extends State<_DistrictPickerDialog> {
+  late final Set<String> _selected = {...widget.selected};
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    final isSi = Localizations.localeOf(context).languageCode == 'si';
+
+    // The user's own district is always followed, so it is not listed
+    final options =
+        sriLankaDistricts.where((d) => d.en != widget.exclude).toList();
+
+    return AlertDialog(
+      title: Text(t.selectDistricts),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ListView(
+          shrinkWrap: true,
+          children: options.map((d) {
+            return CheckboxListTile(
+              dense: true,
+              value: _selected.contains(d.en),
+              title: Text(isSi ? d.si : d.en),
+              onChanged: (checked) {
+                setState(() {
+                  if (checked == true) {
+                    _selected.add(d.en);
+                  } else {
+                    _selected.remove(d.en);
+                  }
+                });
+              },
+            );
+          }).toList(),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(t.cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(_selected),
+          child: Text(t.done),
+        ),
+      ],
     );
   }
 }

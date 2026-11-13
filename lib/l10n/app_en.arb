@@ -68,5 +68,10 @@
   "myLocation": "My location",
   "coordinates": "Coordinates",
   "reportedOn": "Reported on",
-  "mapCredit": "© OpenStreetMap contributors"
+  "mapCredit": "© OpenStreetMap contributors",
+    "watchedDistricts": "Other districts to follow",
+  "watchedDistrictsHint": "You will also get alerts about new reports in these districts",
+  "noWatchedDistricts": "No extra districts selected",
+  "selectDistricts": "Select districts",
+  "done": "Done"
 }

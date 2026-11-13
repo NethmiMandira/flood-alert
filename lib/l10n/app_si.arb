@@ -68,5 +68,10 @@
   "myLocation": "මගේ ස්ථානය",
   "coordinates": "ඛණ්ඩාංක",
   "reportedOn": "වාර්තා කළ වේලාව",
-  "mapCredit": "© OpenStreetMap contributors"
+  "mapCredit": "© OpenStreetMap contributors",
+    "watchedDistricts": "අමතර දිස්ත්‍රික්ක",
+  "watchedDistrictsHint": "මෙම දිස්ත්‍රික්වල නව වාර්තා ගැනද ඔබට දැනුම් දෙනු ඇත",
+  "noWatchedDistricts": "අමතර දිස්ත්‍රික්ක තෝරා නැත",
+  "selectDistricts": "දිස්ත්‍රික්ක තෝරන්න",
+  "done": "අවසන්"
 }

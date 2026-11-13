@@ -1,6 +1,6 @@
 # 🌊 Flood Alert
 
-A community-driven flood and landslide alert app for Sri Lanka, built with **Flutter** and **Firebase**. Residents can report incidents on a live map, and everyone in the same district gets notified so they can stay safe.
+A community-driven flood and landslide alert app for Sri Lanka, built with **Flutter** and **Firebase**. Residents can report incidents on a live map, and everyone following that district gets notified so they can stay safe.
 
 > 🚧 **Status:** Under development.
 
@@ -8,11 +8,11 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 
 ### Available now
 - 🔐 Email login and registration, with automatic sign-in on app restart
-- 👤 Profile with district and up to 5 emergency contacts
+- 👤 Profile with district, extra districts to follow and up to 5 emergency contacts
 - 📍 Report floods, landslides and blocked roads with severity and GPS location
 - 📋 Live, real-time list of recent reports
 - 🗺️ Live map with color-coded pins (🟡 low, 🟠 medium, 🔴 high) and a report detail screen
-- 🔔 Push notifications to everyone in the same district when a new report is submitted
+- 🔔 Push notifications when a new report is submitted in your district, plus any extra districts you choose to follow
 - 🌐 Sinhala / English language support
 - 🌙 Dark mode
 
@@ -32,7 +32,7 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 - **Reporting:** A user chooses the incident type and severity, writes a description (10 to 300 characters) and the GPS location is captured automatically. Clear messages are shown when GPS is off or permission is denied, with a shortcut to the settings.
 - **Live updates:** Reports are streamed from Cloud Firestore, so new reports appear instantly on both the list and the map.
 - **Map:** Built with OpenStreetMap and `flutter_map`, so no API key or billing account is needed. Tapping a pin opens the report details.
-- **Notifications:** Each user is subscribed to a Firebase Cloud Messaging topic for their own district (for example `district_anuradhapura`), and the subscription follows the district if it changes in the profile. After a report is saved, the app calls a small serverless API ([flood-alert-api](https://github.com/NethmiMandira/flood-alert-api)) with the user's Firebase ID token. The API verifies the user and sends the alert to that district's topic. Alerts show as a system notification in the background and as a snackbar while the app is open.
+- **Notifications:** Each user is subscribed to a Firebase Cloud Messaging topic for their own district (for example `district_anuradhapura`) and for any extra districts they follow from the profile screen. The subscriptions are kept in sync whenever the profile changes. After a report is saved, the app calls a small serverless API ([flood-alert-api](https://github.com/NethmiMandira/flood-alert-api)) with the user's Firebase ID token. The API verifies the user and sends the alert to that district's topic. Alerts show as a system notification in the background and as a snackbar while the app is open.
 
 ## 🗄️ Data Model
 
@@ -46,6 +46,7 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 | `district` | string | English district name, also used for the notification topic |
 | `role` | string | `"user"` or `"admin"` |
 | `emergencyContacts` | array | List of `{ name, phone }` (max 5) |
+| `watchedDistricts` | array | Extra districts the user follows for alerts (English names) |
 | `fcmToken` | string | Device token for Firebase Cloud Messaging |
 | `createdAt` | timestamp | Server timestamp |
 
@@ -72,7 +73,7 @@ A community-driven flood and landslide alert app for Sri Lanka, built with **Flu
 | Backend | Firebase (Auth, Cloud Firestore, Cloud Messaging) |
 | State management | Provider |
 | Localization | `flutter_localizations`, ARB files (`si`, `en`) |
-| Local storage | `shared_preferences` (language and theme) |
+| Local storage | `shared_preferences` (language, theme and topic subscriptions) |
 | Map and location | `flutter_map` (OpenStreetMap), `latlong2`, `geolocator` |
 | Notifications | `firebase_messaging`, `http` |
 | Notification server | Next.js API route on Vercel with the Firebase Admin SDK (separate repository) |
@@ -93,7 +94,7 @@ lib/
 │   ├── auth/        # login, register, auth gate
 │   ├── home/        # home screen with list and map tabs
 │   ├── map/         # map screen with severity pins
-│   ├── profile/     # profile and emergency contacts
+│   ├── profile/     # profile, followed districts and emergency contacts
 │   └── report/      # add report, report details, report card
 └── widgets/         # shared widgets
 ```
